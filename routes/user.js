@@ -3,7 +3,10 @@ import db from "./db.js";
 import bodyParser from "body-parser";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "./config.js";
+import dotenv from "dotenv";
+
+dotenv.config();
+// import { JWT_SECRET } from "./config.js";
 import { authMiddleware } from "./middleware.js";
 
 const app = express();
@@ -83,7 +86,7 @@ router.post("/signin", async (req, res) => {
 
         const token = jwt.sign(
             { userId: dbUser.id, username: dbUser.username },
-            JWT_SECRET,
+            process.env.JWT_SECRET,
             { expiresIn: "2h" }
         );
 
